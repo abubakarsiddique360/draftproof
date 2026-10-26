@@ -1,0 +1,16 @@
+{
+  "id": "llm-observability",
+  "topic": "Observability for LLM applications",
+  "audience": "platform engineers",
+  "content_type": "analysis",
+  "tone": "technical",
+  "target_words": 1000,
+  "sources_required": true,
+  "key_points": ["Traces must record the prompt template version", "Token spend belongs on the same dashboard as quality"],
+  "expect": {
+    "min_score": 78,
+    "gates_passed": true,
+    "min_sections": 4,
+    "min_verified_claims": 2
+  }
+}

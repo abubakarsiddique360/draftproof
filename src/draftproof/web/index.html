@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DraftProof Studio</title>
+  <meta name="description" content="DraftProof Studio: plan, research, draft, verify claims, score against a rubric and publish with a provenance manifest.">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="shell">
+    <aside class="sidebar" aria-label="Run history">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-text">
+          <strong>DraftProof</strong>
+          <small>publishing studio</small>
+        </span>
+      </div>
+
+      <button id="new-run" class="btn btn-primary btn-block" type="button">
+        <span aria-hidden="true">+</span> New draft
+      </button>
+
+      <div class="run-list-head">
+        <span>Recent runs</span>
+        <button id="refresh-runs" class="btn btn-ghost btn-tiny" type="button">Refresh</button>
+      </div>
+
+      <ul id="run-list" class="run-list" aria-live="polite">
+        <li class="run-empty">No runs yet. Start your first draft.</li>
+      </ul>
+
+      <footer class="sidebar-footer">
+        <dl id="meta-info" class="meta-info">
+          <div><dt>Provider</dt><dd id="meta-provider">…</dd></div>
+          <div><dt>Retriever</dt><dd id="meta-retriever">…</dd></div>
+          <div><dt>Verification</dt><dd id="meta-verification">…</dd></div>
+        </dl>
+        <label class="key-field">
+          <span>API key (if required)</span>
+          <input id="api-key" type="password" autocomplete="off" placeholder="X-API-Key" spellcheck="false">
+        </label>
+      </footer>
+    </aside>
+
+    <main id="main" class="main">
+      <header class="topbar">
+        <div class="titles">
+          <h1 id="run-title">DraftProof Studio</h1>
+          <p id="run-subtitle" class="muted">
+            Evidence-first drafting: plan, research, draft, verify claims, score, revise, publish.
+          </p>
+        </div>
+        <div id="run-actions" class="actions"></div>
+      </header>
+
+      <nav class="tabs" role="tablist" aria-label="Run views">
+        <button class="tab" role="tab" data-tab="overview" aria-selected="true">Overview</button>
+        <button class="tab" role="tab" data-tab="live" aria-selected="false">Live</button>
+        <button class="tab" role="tab" data-tab="draft" aria-selected="false">Draft</button>
+        <button class="tab" role="tab" data-tab="quality" aria-selected="false">Quality</button>
+        <button class="tab" role="tab" data-tab="sources" aria-selected="false">Sources</button>
+        <button class="tab" role="tab" data-tab="artifacts" aria-selected="false">Artifacts</button>
+        <button class="tab" role="tab" data-tab="manifest" aria-selected="false">Manifest</button>
+      </nav>
+
+      <section id="panel-overview" class="panel" role="tabpanel" aria-labelledby="tab-overview">
+        <div id="overview-empty" class="empty-state">
+          <h2>Nothing selected</h2>
+          <p>Create a draft, or pick a run from the sidebar to inspect its outline, claims and quality report.</p>
+          <button class="btn btn-primary" type="button" data-action="new-run">New draft</button>
+        </div>
+        <div id="overview-body" class="stack" hidden></div>
+      </section>
+
+      <section id="panel-live" class="panel" role="tabpanel" hidden>
+        <div class="panel-head">
+          <h2>Live pipeline</h2>
+          <p class="muted">Every stage, claim verdict and score change, streamed as it happens.</p>
+        </div>
+        <ol id="event-log" class="event-log" aria-live="polite"></ol>
+      </section>
+
+      <section id="panel-draft" class="panel" role="tabpanel" hidden>
+        <div id="draft-body" class="stack"></div>
+      </section>
+
+      <section id="panel-quality" class="panel" role="tabpanel" hidden>
+        <div id="quality-body" class="stack"></div>
+      </section>
+
+      <section id="panel-sources" class="panel" role="tabpanel" hidden>
+        <div id="sources-body" class="stack"></div>
+      </section>
+
+      <section id="panel-artifacts" class="panel" role="tabpanel" hidden>
+        <div id="artifacts-body" class="stack"></div>
+      </section>
+
+      <section id="panel-manifest" class="panel" role="tabpanel" hidden>
+        <div class="panel-head">
+          <h2>Provenance manifest</h2>
+          <p class="muted">Models, evidence hashes, claim verdicts, quality gates and artifact digests.</p>
+        </div>
+        <pre id="manifest-body" class="json-view" tabindex="0">Select a completed run to view its manifest.</pre>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="new-run-dialog" class="dialog">
+    <form id="new-run-form" method="dialog">
+      <header class="dialog-head">
+        <h2>New draft</h2>
+        <button class="btn btn-ghost" type="button" data-action="close-dialog" aria-label="Close">✕</button>
+      </header>
+
+      <div class="field">
+        <label for="field-topic">Topic</label>
+        <textarea id="field-topic" name="topic" rows="2" required minlength="4" maxlength="300"
+          placeholder="e.g. Retrieval-augmented generation in production"></textarea>
+      </div>
+
+      <div class="grid-2">
+        <div class="field">
+          <label for="field-audience">Audience</label>
+          <input id="field-audience" name="audience" value="software engineers" maxlength="120">
+        </div>
+        <div class="field">
+          <label for="field-words">Target words</label>
+          <input id="field-words" name="target_words" type="number" value="1400" min="300" max="6000" step="100">
+        </div>
+        <div class="field">
+          <label for="field-type">Content type</label>
+          <select id="field-type" name="content_type">
+            <option value="explainer">Explainer</option>
+            <option value="tutorial">Tutorial</option>
+            <option value="comparison">Comparison</option>
+            <option value="analysis">Analysis</option>
+            <option value="announcement">Announcement</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="field-tone">Tone</label>
+          <select id="field-tone" name="tone">
+            <option value="practical">Practical</option>
+            <option value="authoritative">Authoritative</option>
+            <option value="conversational">Conversational</option>
+            <option value="technical">Technical</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="field-points">Key points <span class="muted">(one per line, optional)</span></label>
+        <textarea id="field-points" name="key_points" rows="3"
+          placeholder="What must the draft cover?"></textarea>
+      </div>
+
+      <label class="checkbox">
+        <input id="field-sources" name="sources_required" type="checkbox" checked>
+        <span>Require verified citations</span>
+      </label>
+
+      <p id="form-error" class="form-error" role="alert" hidden></p>
+
+      <footer class="dialog-foot">
+        <button class="btn btn-ghost" type="button" data-action="close-dialog">Cancel</button>
+        <button class="btn btn-primary" type="submit">Start drafting</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+  <script type="module" src="/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+services:
+  draftproof:
+    build:
+      context: .
+    image: draftproof:local
+    ports:
+      - "8000:8000"
+    environment:
+      DRAFTPROOF_DATA_DIR: /data
+      # Offline by default. Override to use a hosted model:
+      DRAFTPROOF_PROVIDER: ${DRAFTPROOF_PROVIDER:-mock}
+      DRAFTPROOF_MODEL: ${DRAFTPROOF_MODEL:-}
+      DRAFTPROOF_API_KEY: ${DRAFTPROOF_API_KEY:-}
+      DRAFTPROOF_RETRIEVER: ${DRAFTPROOF_RETRIEVER:-local_corpus}
+      DRAFTPROOF_TAVILY_API_KEY: ${DRAFTPROOF_TAVILY_API_KEY:-}
+      DRAFTPROOF_SERVICE_API_KEY: ${DRAFTPROOF_SERVICE_API_KEY:-}
+      DRAFTPROOF_MAX_COST_USD: ${DRAFTPROOF_MAX_COST_USD:-1.0}
+    volumes:
+      - draftproof-data:/data
+    restart: unless-stopped
+
+volumes:
+  draftproof-data:

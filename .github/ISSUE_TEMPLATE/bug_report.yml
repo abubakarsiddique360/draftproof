@@ -1,0 +1,88 @@
+name: Bug report
+description: Something did not work as documented
+title: "bug: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. Please include enough detail to reproduce the problem offline where possible.
+        For security issues, use the private reporting flow described in SECURITY.md instead.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: Actual behaviour, including the error code if the API returned one.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. export DRAFTPROOF_PROVIDER=...
+        2. draftproof run --topic "..."
+        3. ...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: provider
+    attributes:
+      label: Provider
+      options:
+        - mock (offline)
+        - openai
+        - groq
+        - ollama
+        - openrouter
+        - anthropic
+        - other / custom endpoint
+    validations:
+      required: true
+
+  - type: dropdown
+    id: retriever
+    attributes:
+      label: Retriever
+      options:
+        - local_corpus
+        - tavily
+        - none
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Output of `draftproof version`
+      placeholder: "DraftProof 0.1.0"
+    validations:
+      required: true
+
+  - type: input
+    id: python
+    attributes:
+      label: Python and OS
+      placeholder: "3.12.4 on macOS 15 / Windows 11 / Ubuntu 24.04"
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs or events
+      description: Redact API keys. `GET /api/v1/runs/{id}/events` or the CLI output is ideal.
+      render: text
+    validations:
+      required: false
