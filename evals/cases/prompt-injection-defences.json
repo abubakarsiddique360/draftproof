@@ -1,0 +1,15 @@
+{
+  "id": "prompt-injection-defences",
+  "topic": "Defending retrieval pipelines against prompt injection",
+  "audience": "security-minded developers",
+  "content_type": "comparison",
+  "tone": "authoritative",
+  "target_words": 1000,
+  "sources_required": true,
+  "expect": {
+    "min_score": 78,
+    "gates_passed": true,
+    "min_sections": 4,
+    "min_verified_claims": 2
+  }
+}

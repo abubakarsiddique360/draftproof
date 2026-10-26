@@ -1,0 +1,7 @@
+# DraftProof maintainers
+* @abubakarsiddique360
+
+# Security-sensitive surfaces
+/src/draftproof/research/ @abubakarsiddique360
+/src/draftproof/export/sanitize.py @abubakarsiddique360
+/src/draftproof/api/security.py @abubakarsiddique360

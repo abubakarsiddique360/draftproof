@@ -1,0 +1,17 @@
+{
+  "id": "rag-in-production",
+  "topic": "Retrieval-augmented generation in production",
+  "audience": "software engineers",
+  "content_type": "explainer",
+  "tone": "practical",
+  "target_words": 1200,
+  "sources_required": true,
+  "expect": {
+    "min_score": 80,
+    "gates_passed": true,
+    "min_sections": 4,
+    "min_verified_claims": 3,
+    "max_cost_usd": 0.0,
+    "required_artifacts": ["markdown", "html", "jsonld", "social", "manifest", "quality", "outline"]
+  }
+}

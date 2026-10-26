@@ -1,0 +1,15 @@
+{
+  "id": "zero-downtime-migrations",
+  "topic": "Zero-downtime database migrations",
+  "audience": "backend engineers",
+  "content_type": "tutorial",
+  "tone": "practical",
+  "target_words": 1100,
+  "sources_required": false,
+  "expect": {
+    "min_score": 75,
+    "gates_passed": true,
+    "min_sections": 4,
+    "min_verified_claims": 0
+  }
+}

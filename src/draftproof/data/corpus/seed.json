@@ -1,0 +1,98 @@
+[
+  {
+    "title": "Evaluating retrieval-augmented generation systems",
+    "url": "https://docs.example.com/rag/evaluating-retrieval-augmented-generation",
+    "snippet": "Retrieval-augmented generation quality depends on two separate scores: retrieval recall and answer faithfulness. Measure retrieval recall by checking whether the gold passage appears in the top-k results, then measure faithfulness by asking whether each sentence in the answer is supported by one of those passages. Track both scores per release, because a change that improves recall can still reduce faithfulness when chunk boundaries shift. Production teams typically keep a small labelled set of 50 to 200 questions and re-run it on every prompt change.",
+    "published_at": "2026-02-11",
+    "source": "bundled-corpus",
+    "license": "original"
+  },
+  {
+    "title": "Vector index trade-offs: HNSW, IVF and flat search",
+    "url": "https://docs.example.com/vector-search/index-trade-offs",
+    "snippet": "Flat search gives exact nearest neighbours at linear cost, which is fine below roughly one hundred thousand vectors. HNSW builds a navigable graph and returns approximate neighbours with low latency, at the cost of memory proportional to the graph degree. IVF clusters vectors first and probes only a few lists, so recall depends heavily on the training sample used to build the centroids. Choose the index by measuring recall at the latency budget you actually need, not by benchmark numbers from another dataset.",
+    "published_at": "2026-01-28",
+    "source": "bundled-corpus",
+    "license": "original"
+  },
+  {
+    "title": "Retrieval-augmented generation in production: chunking and freshness",
+    "url": "https://docs.example.com/rag/rag-in-production-chunking-freshness",
+    "snippet": "Two operational details dominate the production experience of retrieval-augmented generation: chunking and freshness. Chunk on semantic boundaries with a small overlap so a claim is never split across two documents, and store the source timestamp with every chunk. Freshness needs an invalidation path: when a document changes, re-embed it and delete the stale vectors in the same transaction. Teams that skip invalidation slowly answer with outdated passages while their dashboards still report healthy retrieval.",
+    "published_at": "2026-03-02",
+    "source": "bundled-corpus",
+    "license": "original"
+  },
+  {
+    "title": "Observability for LLM applications: traces, tokens and drift",
+    "url": "https://docs.example.com/observability/llm-observability-traces",
+    "snippet": "Instrument every model call with a trace that records prompt template version, model name, token counts, latency and cost. Aggregate by template version so a prompt change is visible in the same chart as its effect on quality and spend. Watch three signals for drift: rising completion tokens per request, growing refusal rate, and falling citation coverage. A dashboard without prompt versions cannot explain a regression, only report it.",
+    "published_at": "2026-02-19",
+    "source": "bundled-corpus",
+    "license": "original"
+  },
+  {
+    "title": "Defending retrieval pipelines against prompt injection",
+    "url": "https://docs.example.com/security/prompt-injection-defences",
+    "snippet": "Retrieved text is untrusted input. Strip markup, cap its length, and fence it in a clearly labelled block before it reaches the model. Detect instruction-like phrases such as requests to ignore previous instructions, and record a flag so the run can be reviewed. Never let retrieved content choose tools or URLs on its own; the orchestration layer should only accept identifiers that it issued itself.",
+    "published_at": "2026-01-09",
+    "source": "bundled-corpus",
+    "license": "original"
+  },
+  {
+    "title": "Rate limiting patterns for public APIs",
+    "url": "https://docs.example.com/architecture/rate-limiting-patterns",
+    "snippet": "A token bucket smooths bursts while bounding sustained throughput, and it is cheap to implement in process memory. Return a retry-after header so clients can back off deliberately instead of hammering the endpoint. For multi-instance deployments move the bucket to a shared store, or shard the limit per instance and document the resulting variance.",
+    "published_at": "2025-11-30",
+    "source": "bundled-corpus",
+    "license": "original"
+  },
+  {
+    "title": "Zero-downtime database migrations: expand and contract",
+    "url": "https://docs.example.com/databases/zero-downtime-migrations",
+    "snippet": "Run schema changes in two phases. The expand phase adds nullable columns, new tables and dual writes without breaking old readers. The contract phase removes the old paths once every deployed instance writes through the new one. Keep each migration independently deployable and reversible so a rollback never requires a data restore.",
+    "published_at": "2025-12-14",
+    "source": "bundled-corpus",
+    "license": "original"
+  },
+  {
+    "title": "Multi-agent orchestration patterns: fan-out, critique and revision",
+    "url": "https://docs.example.com/agents/multi-agent-orchestration-patterns",
+    "snippet": "Fan-out drafting keeps latency predictable because independent sections are written in parallel. A critique stage that scores the merged draft is more useful than a second writer, since it produces the directives the revision stage consumes. Bound the revision loop, checkpoint each attempt, and stop when the score stops improving rather than when the budget runs out.",
+    "published_at": "2026-02-05",
+    "source": "bundled-corpus",
+    "license": "original"
+  },
+  {
+    "title": "Measuring content quality with deterministic metrics",
+    "url": "https://docs.example.com/content/content-quality-metrics",
+    "snippet": "Deterministic metrics catch the failures that language models are worst at judging about themselves. Score structure with heading hierarchy, citation coverage with verified sources per claim, repetition with duplicate n-grams across sections, and readability with a Flesch reading ease target between 45 and 70 for technical audiences. Combine the metrics with explicit weights and a pass threshold, then show every metric to the editor.",
+    "published_at": "2026-01-21",
+    "source": "bundled-corpus",
+    "license": "original"
+  },
+  {
+    "title": "Grounding claims in citations: verification that is not a prompt",
+    "url": "https://docs.example.com/content/grounding-claims-in-citations",
+    "snippet": "Asking a model to cite its sources produces syntax, not evidence. Verification has to happen outside the model: resolve the URL, fetch the document, and compare the claim's content terms with the retrieved text. Record a confidence score per claim so weak support is visible, and publish the provenance manifest alongside the article so a reader can audit the chain from claim to source.",
+    "published_at": "2026-03-08",
+    "source": "bundled-corpus",
+    "license": "original"
+  },
+  {
+    "title": "Cost control for LLM pipelines",
+    "url": "https://docs.example.com/platform/llm-cost-control",
+    "snippet": "Set a cost budget per run and enforce it in the router before every call. Route cheap stages such as claim extraction to a smaller model and reserve the larger model for drafting. Cache identical prompts, truncate evidence deliberately, and record token counts per stage so the expensive step is visible instead of averaged away.",
+    "published_at": "2026-02-24",
+    "source": "bundled-corpus",
+    "license": "original"
+  },
+  {
+    "title": "Caching strategies for retrieval systems",
+    "url": "https://docs.example.com/architecture/caching-for-retrieval",
+    "snippet": "Cache retrieval results by normalized query and collection version, and invalidate on document updates rather than on a timer. A short lived cache removes most duplicate work in agent loops, while a stale cache quietly returns passages that no longer exist. Store the cache hit rate next to latency so a regression in invalidation is visible in the metrics.",
+    "published_at": "2026-01-16",
+    "source": "bundled-corpus",
+    "license": "original"
+  }
+]

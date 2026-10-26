@@ -1,0 +1,61 @@
+name: Feature request
+description: Propose a capability or a quality improvement
+title: "feat: "
+labels: ["enhancement", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        DraftProof prefers measurable improvements. If your idea changes scoring or verification,
+        say how it could be evaluated.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What is hard or impossible today?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      description: The smallest useful version of the change.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      multiple: true
+      options:
+        - pipeline
+        - providers
+        - research / verification
+        - quality rubric
+        - exports
+        - API
+        - studio UI
+        - CLI
+        - storage
+        - documentation
+        - tooling / CI
+    validations:
+      required: true
+
+  - type: textarea
+    id: evaluation
+    attributes:
+      label: How would we evaluate it?
+      description: Which metric, golden case or gate would show that this works?
+    validations:
+      required: false
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+    validations:
+      required: false
